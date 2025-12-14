@@ -25,8 +25,8 @@ export const useRestaurants = () => {
   };
 
   const addRestaurant = async (data: RestaurantFormData) => {
-    console.log(data,'===')
     const created = await createRestaurantApi(data);
+    console.log('response form backend :',created)
     setRestaurants((prev) => [...prev, created]);
   };
 

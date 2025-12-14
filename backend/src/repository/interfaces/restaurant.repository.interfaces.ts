@@ -6,4 +6,6 @@ export interface IRestaurantRepository {
   create(data: CreateRestaurantDTO): Promise<RestaurantDocument>;
   update(id: string, data: CreateRestaurantDTO): Promise<RestaurantDocument | null>;
   delete(id: string): Promise<void>;
+  findByEmailOrPhone(email: string, phone: string): Promise<RestaurantDocument | null>;
+  findDuplicateForUpdate(id: string, email: string, phone: string): Promise<RestaurantDocument | null>;
 }
