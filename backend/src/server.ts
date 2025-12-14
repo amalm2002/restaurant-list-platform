@@ -8,8 +8,8 @@ const app = express()
 const PORT = process.env.PORT
 
 app.use(cors({
-    origin: process.env.ORIGIN_URL,
-    credentials: true
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
 }))
 
 connectDB()
