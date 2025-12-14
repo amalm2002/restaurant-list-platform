@@ -25,21 +25,40 @@ export const useRestaurants = () => {
   };
 
   const addRestaurant = async (data: RestaurantFormData) => {
-    const created = await createRestaurantApi(data);
-    console.log('response form backend :',created)
-    setRestaurants((prev) => [...prev, created]);
+    try {
+      const created = await createRestaurantApi(data);
+      setRestaurants((prev) => [...prev, created]);
+      return created;
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message || "Something went wrong";
+      throw new Error(message);
+    }
   };
 
   const updateRestaurant = async (id: string, data: RestaurantFormData) => {
-    const updated = await updateRestaurantApi(id, data);
-    setRestaurants((prev) =>
-      prev.map((r) => (r.id === id ? updated : r))
-    );
+    try {
+      const updated = await updateRestaurantApi(id, data);
+      setRestaurants((prev) =>
+        prev.map((r) => (r.id === id ? updated : r))
+      );
+      return updated;
+    } catch (error: any) {
+      throw new Error(
+        error.response?.data?.message || "Failed to update restaurant"
+      );
+    }
   };
 
   const deleteRestaurant = async (id: string) => {
-    await deleteRestaurantApi(id);
-    setRestaurants((prev) => prev.filter((r) => r.id !== id));
+    try {
+      await deleteRestaurantApi(id);
+      setRestaurants((prev) => prev.filter((r) => r.id !== id));
+    } catch (error: any) {
+      throw new Error(
+        error.response?.data?.message || "Failed to delete restaurant"
+      );
+    }
   };
 
   return {

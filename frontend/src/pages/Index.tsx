@@ -45,21 +45,31 @@ const Index = () => {
     setDeleteOpen(true);
   };
 
-  const handleFormSubmit = (data: RestaurantFormData) => {
-    if (selectedRestaurant) {
-      updateRestaurant(selectedRestaurant.id, data);
+  const handleFormSubmit = async (data: RestaurantFormData) => {
+    try {
+      if (selectedRestaurant) {
+        await updateRestaurant(selectedRestaurant.id, data);
+        toast({
+          title: "Restaurant Updated",
+          description: `${data.name} has been updated successfully.`,
+        });
+      } else {
+        await addRestaurant(data);
+        toast({
+          title: "Restaurant Added",
+          description: `${data.name} has been added to the list.`,
+        });
+      }
+    } catch (error: any) {
       toast({
-        title: 'Restaurant Updated',
-        description: `${data.name} has been updated successfully.`,
-      });
-    } else {
-      addRestaurant(data);
-      toast({
-        title: 'Restaurant Added',
-        description: `${data.name} has been added to the list.`,
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
       });
     }
   };
+
+
 
   const handleDeleteConfirm = () => {
     if (selectedRestaurant) {
