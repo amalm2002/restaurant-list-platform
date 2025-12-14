@@ -5,3 +5,14 @@ export interface CreateRestaurantDTO {
   phone: string
   email: string
 }
+
+export interface RestaurantResponseDTO {
+  id: string;
+  name: string;
+  address: string;
+  cuisine: string;
+  phone: string;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

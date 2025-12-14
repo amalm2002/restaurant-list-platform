@@ -1,25 +1,46 @@
 import { Request, Response } from "express";
+import { IRestaurantController } from "../interfaces/restaurant.controller.interfaces";
 import { RestaurantService } from "../../service/implementations/restaurant.service";
 
-const service = new RestaurantService();
+export class RestaurantController implements IRestaurantController {
+    private _service = new RestaurantService();
 
-export const getRestaurants = async (_: Request, res: Response) => {
-    const data = await service.getAll();
-    res.json({ success: true, data });
-};
+    async getAll(_: Request, res: Response): Promise<Response> {
+        const data = await this._service.getAll();
+        return res.status(200).json({
+            success: true,
+            data,
+        });
+    }
 
-export const createRestaurant = async (req: Request, res: Response) => {
-    console.log('data is getting :', req.body)
-    const data = await service.create(req.body);
-    res.status(201).json({ success: true, data });
-};
+    async create(req: Request, res: Response): Promise<Response> {
+        const data = await this._service.create(req.body);
+        return res.status(201).json({
+            success: true,
+            message: "Restaurant created successfully",
+            data,
+        });
+    }
 
-export const updateRestaurant = async (req: Request, res: Response) => {
-    const data = await service.update(req.params.id, req.body);
-    res.json({ success: true, data });
-};
+    async update(req: Request, res: Response): Promise<Response> {
+        const data = await this._service.update(req.params.id, req.body);
 
-export const deleteRestaurant = async (req: Request, res: Response) => {
-    await service.delete(req.params.id);
-    res.status(204).send();
-};
+        if (!data) {
+            return res.status(404).json({
+                success: false,
+                message: "Restaurant not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Restaurant updated successfully",
+            data,
+        });
+    }
+
+    async delete(req: Request, res: Response): Promise<Response> {
+        await this._service.delete(req.params.id);
+        return res.status(204).send();
+    }
+}
