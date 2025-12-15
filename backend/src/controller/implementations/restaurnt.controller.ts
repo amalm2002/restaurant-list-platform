@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { IRestaurantController } from "../interfaces/restaurant.controller.interfaces";
-import { RestaurantService } from "../../service/implementations/restaurant.service";
+import { IRestaurantService } from "../../service/interfaces/restaurant.service.interfaces";
 import { STATUS_CODE } from "../../constants/status.code.constant";
 import { MESSAGE } from "../../constants/message.constants";
 
 export class RestaurantController implements IRestaurantController {
-    private _service = new RestaurantService();
+
+    constructor(private _service: IRestaurantService) { }
 
     async getAll(_: Request, res: Response): Promise<Response> {
         try {

@@ -1,4 +1,4 @@
-import { RestaurantRepository } from "../../repository/implementations/restaurant.repository";
+import { IRestaurantRepository } from "../../repository/interfaces/restaurant.repository.interfaces";
 import {
   CreateRestaurantDTO,
   RestaurantResponseDTO,
@@ -7,7 +7,8 @@ import { IRestaurantService } from "../interfaces/restaurant.service.interfaces"
 import { RestaurantDocument } from "../../model/Restaurant";
 
 export class RestaurantService implements IRestaurantService {
-  private _repository = new RestaurantRepository();
+  
+  constructor(private _repository: IRestaurantRepository) { }
 
   private mapToDTO(doc: RestaurantDocument): RestaurantResponseDTO {
     return {
