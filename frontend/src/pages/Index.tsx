@@ -6,6 +6,7 @@ import { RestaurantForm } from '@/components/RestaurantForm';
 import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Plus, Search, UtensilsCrossed } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -87,7 +88,12 @@ const Index = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
+        <DotLottieReact
+          src="https://lottie.host/d255fc10-fe54-4069-bbf0-86fdfd497e98/x7dPJMwS8p.lottie"
+          loop
+          autoplay
+          style={{ width: 150, height: 150 }}
+        />
       </div>
     );
   }
